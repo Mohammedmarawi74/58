@@ -589,16 +589,11 @@ export default function App() {
                     )}
                   </div>
 
-                  <div className={cn(
-                    "flex items-center justify-center transition-all",
-                    currentSlide.logoImage 
-                      ? "p-0 min-h-16" 
-                      : cn("px-6 py-4 shadow-lg min-h-24 min-w-40", activeTheme.logoBg)
-                  )}>
+                  <div className="flex items-center justify-center transition-all bg-white px-8 py-5 shadow-2xl min-h-24 min-w-48 rounded-sm">
                     {currentSlide.logoImage ? (
                       <img src={currentSlide.logoImage} alt="Logo" className="max-h-20 w-auto object-contain" />
                     ) : (
-                      <span className={cn("text-3xl font-medium tracking-tight", activeTheme.logoTextColor)} dir="ltr">
+                      <span className="text-3xl font-medium tracking-tight text-gray-900" dir="ltr">
                         {currentSlide.logoText}
                         <span className="inline-block ml-1 opacity-70">⟳</span>
                       </span>
