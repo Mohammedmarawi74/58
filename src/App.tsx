@@ -5,6 +5,23 @@ import { cn } from './lib/utils';
 
 type Field = { id: string; label: string; value: string };
 
+type Theme = {
+  id: string;
+  name: string;
+  canvasBg: string;
+  accentColor: string;
+  textColor: string;
+  secondaryTextColor: string;
+  badgeBg: string;
+  badgeAccent: string;
+  badgeTextColor: string;
+  logoBg: string;
+  logoTextColor: string;
+  gridIconColor: string;
+  dividerColor: string;
+  patternOpacity: number;
+};
+
 type Slide = {
   id: string;
   logoText: string;
@@ -14,8 +31,175 @@ type Slide = {
   title: string;
   subtitle: string;
   fields: Field[];
-  footerText: string;
+  footerRight: string;
+  footerLeft: string;
+  themeId: string;
+  logoImage?: string;
+  badgeImage?: string;
 };
+
+const themes: Theme[] = [
+  {
+    id: 'navy-dark',
+    name: 'كحلي عميق (ليلي)',
+    canvasBg: 'bg-[#0a0f16]',
+    accentColor: 'text-cyan-300',
+    textColor: 'text-white',
+    secondaryTextColor: 'text-gray-300',
+    badgeBg: 'bg-[#1a2332]',
+    badgeAccent: 'from-cyan-400 to-blue-500',
+    badgeTextColor: 'text-cyan-400',
+    logoBg: 'bg-white',
+    logoTextColor: 'text-gray-900',
+    gridIconColor: 'text-cyan-400',
+    dividerColor: 'via-white/20',
+    patternOpacity: 0.15,
+  },
+  {
+    id: 'navy-light',
+    name: 'كحلي هادئ (نهاري)',
+    canvasBg: 'bg-[#f0f4f8]',
+    accentColor: 'text-blue-600',
+    textColor: 'text-blue-950',
+    secondaryTextColor: 'text-blue-800/70',
+    badgeBg: 'bg-white shadow-sm',
+    badgeAccent: 'from-blue-600 to-indigo-700',
+    badgeTextColor: 'text-blue-700',
+    logoBg: 'bg-blue-900',
+    logoTextColor: 'text-white',
+    gridIconColor: 'text-blue-500',
+    dividerColor: 'via-blue-200',
+    patternOpacity: 0.05,
+  },
+  {
+    id: 'navy-midnight',
+    name: 'كحلي ملكي',
+    canvasBg: 'bg-[#050b18]',
+    accentColor: 'text-blue-400',
+    textColor: 'text-slate-100',
+    secondaryTextColor: 'text-slate-400',
+    badgeBg: 'bg-[#111827]',
+    badgeAccent: 'from-indigo-500 to-blue-600',
+    badgeTextColor: 'text-indigo-300',
+    logoBg: 'bg-slate-200',
+    logoTextColor: 'text-blue-950',
+    gridIconColor: 'text-indigo-400',
+    dividerColor: 'via-slate-700',
+    patternOpacity: 0.1,
+  },
+  {
+    id: 'navy-gradient',
+    name: 'كحلي متدرج',
+    canvasBg: 'bg-gradient-to-br from-[#0f172a] to-[#1e293b]',
+    accentColor: 'text-teal-400',
+    textColor: 'text-white',
+    secondaryTextColor: 'text-slate-300',
+    badgeBg: 'bg-slate-800/80',
+    badgeAccent: 'from-teal-500 to-emerald-600',
+    badgeTextColor: 'text-teal-300',
+    logoBg: 'bg-white',
+    logoTextColor: 'text-slate-900',
+    gridIconColor: 'text-teal-500',
+    dividerColor: 'via-teal-500/30',
+    patternOpacity: 0.1,
+  },
+  {
+    id: 'navy-corporate',
+    name: 'كحلي احترافي',
+    canvasBg: 'bg-[#0f1c2e]',
+    accentColor: 'text-sky-400',
+    textColor: 'text-sky-50',
+    secondaryTextColor: 'text-sky-200/60',
+    badgeBg: 'bg-[#1f2937]',
+    badgeAccent: 'from-sky-600 to-sky-400',
+    badgeTextColor: 'text-sky-300',
+    logoBg: 'bg-sky-50',
+    logoTextColor: 'text-[#0f1c2e]',
+    gridIconColor: 'text-sky-400',
+    dividerColor: 'via-sky-400/20',
+    patternOpacity: 0.12,
+  },
+  {
+    id: 'dark-slate',
+    name: 'رمادي عصري',
+    canvasBg: 'bg-[#111827]',
+    accentColor: 'text-emerald-400',
+    textColor: 'text-white',
+    secondaryTextColor: 'text-gray-400',
+    badgeBg: 'bg-gray-800',
+    badgeAccent: 'from-emerald-500 to-teal-600',
+    badgeTextColor: 'text-emerald-300',
+    logoBg: 'bg-white',
+    logoTextColor: 'text-gray-900',
+    gridIconColor: 'text-emerald-500',
+    dividerColor: 'via-emerald-500/20',
+    patternOpacity: 0.08,
+  },
+  {
+    id: 'pure-white',
+    name: 'أبيض بسيط',
+    canvasBg: 'bg-white',
+    accentColor: 'text-gray-900',
+    textColor: 'text-gray-900',
+    secondaryTextColor: 'text-gray-500',
+    badgeBg: 'bg-gray-50 border border-gray-200',
+    badgeAccent: 'from-gray-800 to-gray-600',
+    badgeTextColor: 'text-gray-700',
+    logoBg: 'bg-gray-900',
+    logoTextColor: 'text-white',
+    gridIconColor: 'text-gray-400',
+    dividerColor: 'via-gray-200',
+    patternOpacity: 0.03,
+  },
+  {
+    id: 'luxury-black',
+    name: 'أسود فاخر',
+    canvasBg: 'bg-[#0a0a0a]',
+    accentColor: 'text-amber-400',
+    textColor: 'text-white',
+    secondaryTextColor: 'text-gray-500',
+    badgeBg: 'bg-zinc-900',
+    badgeAccent: 'from-amber-600 to-yellow-500',
+    badgeTextColor: 'text-amber-200',
+    logoBg: 'bg-amber-400',
+    logoTextColor: 'text-black',
+    gridIconColor: 'text-amber-500',
+    dividerColor: 'via-amber-500/20',
+    patternOpacity: 0.2,
+  },
+  {
+    id: 'crimson-night',
+    name: 'أحمر داكن',
+    canvasBg: 'bg-[#1a0b0b]',
+    accentColor: 'text-rose-400',
+    textColor: 'text-rose-50',
+    secondaryTextColor: 'text-rose-200/50',
+    badgeBg: 'bg-[#2a1313]',
+    badgeAccent: 'from-rose-600 to-rose-400',
+    badgeTextColor: 'text-rose-300',
+    logoBg: 'bg-white',
+    logoTextColor: 'text-rose-950',
+    gridIconColor: 'text-rose-500',
+    dividerColor: 'via-rose-500/20',
+    patternOpacity: 0.1,
+  },
+  {
+    id: 'forest-modern',
+    name: 'أخضر ملكي',
+    canvasBg: 'bg-[#061a14]',
+    accentColor: 'text-lime-400',
+    textColor: 'text-lime-50',
+    secondaryTextColor: 'text-lime-200/50',
+    badgeBg: 'bg-[#0d2a20]',
+    badgeAccent: 'from-lime-600 to-green-500',
+    badgeTextColor: 'text-lime-300',
+    logoBg: 'bg-white',
+    logoTextColor: 'text-[#061a14]',
+    gridIconColor: 'text-lime-400',
+    dividerColor: 'via-lime-500/20',
+    patternOpacity: 0.12,
+  },
+];
 
 const defaultSlide: Slide = {
   id: '1',
@@ -34,7 +218,11 @@ const defaultSlide: Slide = {
     { id: 'f6', label: 'أبرز المستثمرين', value: 'ثيا فينتشرز، إكسيميوس فينتشرز' },
     { id: 'f7', label: 'المنافسون', value: 'أورورا سولار، بليكسيجريد' },
   ],
-  footerText: 'Inc42',
+  footerRight: 'منصة المستثمر الاقتصادية',
+  footerLeft: 'al-investor.com',
+  themeId: 'navy-dark',
+  logoImage: undefined,
+  badgeImage: '/logos/logo-1.png', // Default branded logo
 };
 
 export default function App() {
@@ -94,14 +282,13 @@ export default function App() {
     if (canvasRef.current === null) return;
     setIsExporting(true);
     try {
-      // Small delay to ensure rendering is complete
       await new Promise((resolve) => setTimeout(resolve, 100));
       const dataUrl = await toPng(canvasRef.current, {
         quality: 1,
-        pixelRatio: 1, // Export at true dimensions (1080x1080)
+        pixelRatio: 1,
         width: 1080,
         height: 1080,
-        style: { transform: 'scale(1)', transformOrigin: 'top left' }, // Ensure no scaling issues
+        style: { transform: 'scale(1)', transformOrigin: 'top left' },
       });
       const link = document.createElement('a');
       link.download = `slide-${currentIndex + 1}.png`;
@@ -114,6 +301,38 @@ export default function App() {
       setIsExporting(false);
     }
   }, [currentIndex]);
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert('حجم الملف كبير جداً. يرجى اختيار صورة أقل من 2 ميجا بايت.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        updateSlide({ logoImage: event.target?.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBadgeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert('حجم الملف كبير جداً. يرجى اختيار صورة أقل من 2 ميجا بايت.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        updateSlide({ badgeImage: event.target?.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const activeTheme = themes.find((t) => t.id === currentSlide.themeId) || themes[0];
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden font-sans" dir="rtl">
@@ -136,49 +355,83 @@ export default function App() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
+          {/* Theme Selector */}
+          <section className="space-y-4">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider">نمط التصميم (الثيمات)</h2>
+            <div className="grid grid-cols-2 gap-2">
+              {themes.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => updateSlide({ themeId: t.id })}
+                  className={cn(
+                    "px-3 py-2 text-xs font-medium rounded-md border transition-all text-right",
+                    currentSlide.themeId === t.id 
+                      ? "bg-blue-600 border-blue-600 text-white shadow-md" 
+                      : "bg-white border-gray-200 text-gray-700 hover:border-blue-400 hover:bg-blue-50"
+                  )}
+                >
+                  {t.name}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <hr className="border-gray-200" />
+          
           {/* Header Section */}
           <section className="space-y-4">
             <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider">الترويسة</h2>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">نص الشعار (أعلى اليمين)</label>
-                <input
-                  type="text"
-                  value={currentSlide.logoText}
-                  onChange={(e) => updateSlide({ logoText: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  dir="ltr"
-                />
+                <label className="block text-xs font-medium text-gray-700 mb-1">رفع شعار (اختياري)</label>
+                <div className="flex items-center gap-2">
+                  <label className="flex-1 flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 rounded-md py-4 cursor-pointer hover:bg-gray-50 transition-colors">
+                    <ImageIcon size={18} className="text-gray-400" />
+                    <span className="text-xs text-gray-500 font-medium">اختار صورة</span>
+                    <input type="file" className="hidden" accept="image/*" onChange={handleLogoUpload} />
+                  </label>
+                  {currentSlide.logoImage && (
+                    <button
+                      onClick={() => updateSlide({ logoImage: undefined })}
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-md transition-all"
+                      title="حذف الشعار"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              
+              {!currentSlide.logoImage && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">الشارة (علوي)</label>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">نص الشعار (أعلى اليمين)</label>
                   <input
                     type="text"
-                    value={currentSlide.badgeTop}
-                    onChange={(e) => updateSlide({ badgeTop: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                    value={currentSlide.logoText}
+                    onChange={(e) => updateSlide({ logoText: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                     dir="ltr"
                   />
                 </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">الشارة (سفلي)</label>
-                  <input
-                    type="text"
-                    value={currentSlide.badgeBottom}
-                    onChange={(e) => updateSlide({ badgeBottom: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
-                  />
-                </div>
-              </div>
+              )}
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">الشارة (وسط)</label>
-                <input
-                  type="text"
-                  value={currentSlide.badgeMiddle}
-                  onChange={(e) => updateSlide({ badgeMiddle: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
-                />
+                <label className="block text-xs font-medium text-gray-700 mb-1">رفع شارة/لوغو يمين (اختياري)</label>
+                <div className="flex items-center gap-2">
+                  <label className="flex-1 flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 rounded-md py-4 cursor-pointer hover:bg-gray-50 transition-colors">
+                    <ImageIcon size={18} className="text-gray-400" />
+                    <span className="text-xs text-gray-500 font-medium">تغيير الصورة</span>
+                    <input type="file" className="hidden" accept="image/*" onChange={handleBadgeUpload} />
+                  </label>
+                  {currentSlide.badgeImage && (
+                    <button
+                      onClick={() => updateSlide({ badgeImage: undefined })}
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-md transition-all"
+                      title="حذف الصورة"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </section>
@@ -259,15 +512,26 @@ export default function App() {
           {/* Footer Section */}
           <section className="space-y-4 pb-8">
             <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider">التذييل</h2>
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">نص التذييل</label>
-              <input
-                type="text"
-                value={currentSlide.footerText}
-                onChange={(e) => updateSlide({ footerText: e.target.value })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
-                dir="ltr"
-              />
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">النص اليمين (عربي)</label>
+                <input
+                  type="text"
+                  value={currentSlide.footerRight}
+                  onChange={(e) => updateSlide({ footerRight: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">النص اليسار (إنجليزي)</label>
+                <input
+                  type="text"
+                  value={currentSlide.footerLeft}
+                  onChange={(e) => updateSlide({ footerLeft: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                  dir="ltr"
+                />
+              </div>
             </div>
           </section>
         </div>
@@ -275,94 +539,120 @@ export default function App() {
 
       {/* Main Canvas Area */}
       <div className="flex-1 flex flex-col relative bg-gray-200">
-        {/* Canvas Container - Centered and Scaled */}
         <div className="flex-1 overflow-auto flex items-center justify-center p-8">
           <div className="relative shadow-2xl transition-transform duration-200" style={{ transform: 'scale(0.85)', transformOrigin: 'center' }}>
-            {/* The actual canvas element to be exported */}
             <div
               ref={canvasRef}
               id="canvas-node"
-              className="w-[1080px] h-[1080px] relative overflow-hidden flex flex-col canvas-container"
+              className={cn(
+                "w-[1080px] h-[1080px] relative overflow-hidden flex flex-col",
+                activeTheme.canvasBg
+              )}
               dir="rtl"
             >
-              {/* Noise Overlay */}
               <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none noise-overlay" />
+              <div 
+                className="absolute inset-0 pointer-events-none" 
+                style={{ opacity: activeTheme.patternOpacity }}
+              >
+                <div className="absolute inset-0 decorative-pattern" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05)_0%,transparent_70%)]" />
+              </div>
 
-              {/* Content Wrapper */}
               <div className="relative z-10 flex flex-col h-full p-16">
-                
-                {/* Top Section: Logo and Badge (Reversed) */}
                 <div className="flex justify-between items-start mb-16">
-                  {/* Badge (Now on the right in RTL) */}
-                  <div className="relative p-[1px] border border-dashed border-gray-500/50">
-                    {/* Decorative star */}
-                    <div className="absolute -top-4 -right-4 text-white opacity-80">✨</div>
-                    
-                    <div className="bg-[#1a2332] flex items-stretch h-24">
-                      {/* Left Cyan Block */}
-                      <div className="bg-gradient-to-br from-cyan-300 to-cyan-500 w-24 flex items-center justify-center">
-                        <span className="text-5xl font-black text-white" dir="ltr">{currentSlide.badgeTop}</span>
+                  {/* Badge / Top Right Brand */}
+                  <div className="relative">
+                    {currentSlide.badgeImage ? (
+                      <div className="transition-all">
+                        <img src={currentSlide.badgeImage} alt="Brand" className="max-h-24 w-auto object-contain" />
                       </div>
-                      {/* Right Text Block */}
-                      <div className="px-6 py-3 flex flex-col justify-center items-start">
-                        <span className="text-2xl font-bold text-cyan-400 tracking-wide">{currentSlide.badgeMiddle}</span>
-                        <div className="bg-white text-gray-900 text-xs font-bold px-2 py-1 mt-1 rounded-sm" dir="ltr">
-                          {currentSlide.badgeBottom}
+                    ) : (
+                      <div className="relative p-[1px] border border-dashed border-gray-500/50">
+                        {/* Decorative star */}
+                        <div className={cn("absolute -top-4 -right-4", activeTheme.textColor, "opacity-80")}>✨</div>
+                        
+                        <div className={cn("flex items-stretch h-24", activeTheme.badgeBg)}>
+                          {/* Left Block */}
+                          <div className={cn("bg-gradient-to-br w-24 flex items-center justify-center", activeTheme.badgeAccent)}>
+                            <span className="text-5xl font-black text-white" dir="ltr">{currentSlide.badgeTop}</span>
+                          </div>
+                          {/* Right Text Block */}
+                          <div className="px-6 py-3 flex flex-col justify-center items-start">
+                            <span className={cn("text-2xl font-bold tracking-wide", activeTheme.badgeTextColor)}>{currentSlide.badgeMiddle}</span>
+                            <div className="bg-white text-gray-900 text-xs font-bold px-2 py-1 mt-1 rounded-sm" dir="ltr">
+                              {currentSlide.badgeBottom}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
 
-                  {/* Logo Box (Now on the left in RTL) */}
-                  <div className="bg-white px-6 py-4 flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                    <span className="text-3xl font-medium text-green-900 tracking-tight" dir="ltr">
-                      {currentSlide.logoText}
-                      <span className="inline-block ml-1 text-green-700">⟳</span>
-                    </span>
+                  <div className={cn(
+                    "flex items-center justify-center transition-all",
+                    currentSlide.logoImage 
+                      ? "p-0 min-h-16" 
+                      : cn("px-6 py-4 shadow-lg min-h-24 min-w-40", activeTheme.logoBg)
+                  )}>
+                    {currentSlide.logoImage ? (
+                      <img src={currentSlide.logoImage} alt="Logo" className="max-h-20 w-auto object-contain" />
+                    ) : (
+                      <span className={cn("text-3xl font-medium tracking-tight", activeTheme.logoTextColor)} dir="ltr">
+                        {currentSlide.logoText}
+                        <span className="inline-block ml-1 opacity-70">⟳</span>
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                {/* Title Section */}
                 <div className="mb-10">
-                  <h1 className="text-6xl font-bold text-cyan-100 mb-4 tracking-tight">{currentSlide.title}</h1>
-                  <p className="text-2xl text-gray-300 font-medium">{currentSlide.subtitle}</p>
+                  <h1 className={cn("text-6xl font-bold mb-4 tracking-tight", activeTheme.textColor)}>{currentSlide.title}</h1>
+                  <p className={cn("text-2xl font-medium", activeTheme.secondaryTextColor)}>{currentSlide.subtitle}</p>
                 </div>
 
-                {/* Grid Section */}
                 <div className="flex-1 relative">
-                  {/* Decorative border */}
                   <div className="absolute inset-0 border border-gray-500/30 rounded-sm pointer-events-none">
-                    {/* Corner markers */}
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-gray-300"></div>
-                    <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gray-300"></div>
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-gray-400"></div>
+                    <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gray-400"></div>
                   </div>
                   
-                  {/* Grid Content */}
                   <div className="grid grid-cols-2 gap-x-16 gap-y-12 p-10 h-full content-start">
                     {currentSlide.fields.map((field) => (
                       <div key={field.id} className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 text-cyan-300">
+                        <div className={cn("flex items-center gap-2", activeTheme.accentColor)}>
                           <span className="text-xl leading-none -mt-1">□</span>
                           <span className="text-lg font-bold tracking-widest uppercase">{field.label}</span>
                         </div>
-                        <div className="text-2xl text-gray-200 font-medium leading-relaxed pr-6">
+                        <div className={cn("text-2xl font-medium leading-relaxed pr-6", activeTheme.textColor)}>
                           {field.value}
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Decorative abstract square on the left */}
                   <div className="absolute -top-12 -left-4 w-24 h-24 border border-white/20 flex items-center justify-center opacity-80">
-                    <div className="w-full h-full bg-gradient-to-br from-cyan-400/40 to-blue-600/40 mix-blend-screen decorative-pattern"></div>
+                    <div className={cn("w-full h-full bg-gradient-to-br mix-blend-screen decorative-pattern", activeTheme.badgeAccent)}></div>
                   </div>
                 </div>
 
-                {/* Footer */}
-                <div className="mt-8 flex justify-end">
-                  <span className="text-4xl font-bold text-white tracking-tighter" dir="ltr">{currentSlide.footerText}</span>
+                <div className="mt-auto pt-10">
+                  <div className={cn("w-full h-px bg-gradient-to-r from-transparent to-transparent mb-8", activeTheme.dividerColor)} />
+                  <div className={cn("flex flex-col md:flex-row justify-between items-center gap-6 modern-footer px-4", activeTheme.textColor)}>
+                    {/* Right Side (Arabic) */}
+                    <div>
+                      <span className="text-3xl font-bold footer-text-glow tracking-tight">
+                        {currentSlide.footerRight}
+                      </span>
+                    </div>
+                    {/* Left Side (English) */}
+                    <div>
+                      <span className="text-3xl font-bold footer-text-glow tracking-tight opacity-90 hover:opacity-100 transition-opacity cursor-pointer">
+                        {currentSlide.footerLeft}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -389,12 +679,10 @@ export default function App() {
               )}
               onClick={() => setCurrentIndex(index)}
             >
-              {/* Mini preview placeholder */}
               <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                  <span className="text-white text-xs truncate px-2">{slide.title || `شريحة ${index + 1}`}</span>
               </div>
               
-              {/* Overlay controls */}
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <button
                   onClick={(e) => { e.stopPropagation(); duplicateSlide(); }}
@@ -414,7 +702,6 @@ export default function App() {
                 )}
               </div>
               
-              {/* Active indicator */}
               {currentIndex === index && (
                 <div className="absolute top-1 right-1 w-2 h-2 bg-blue-600 rounded-full"></div>
               )}

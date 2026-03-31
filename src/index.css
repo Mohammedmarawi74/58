@@ -1,8 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Modern SaaS Color Palette */
+  --color-primary: #0ea5e9; /* Sky 500 */
+  --color-secondary: #64748b; /* Slate 500 */
+  --color-accent: #10b981; /* Emerald 500 */
+  
+  --color-text-primary: #1e293b; /* Slate 800 */
+  --color-text-secondary: #475569; /* Slate 600 */
+  --color-text-dim: #94a3b8; /* Slate 400 */
+  
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8fafc;
+  --color-border-elegant: rgba(0, 0, 0, 0.05);
+}
+
+/* Ensure font applies to everything, including form elements which don't always inherit */
+*,
+*::before,
+*::after,
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
 }
 
 body {
@@ -32,4 +57,22 @@ body {
 .decorative-pattern {
   background-image: radial-gradient(circle, #00ffcc 1px, transparent 1px);
   background-size: 8px 8px;
+}
+
+/* Modern Footer Styles */
+.footer-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border-elegant), transparent);
+}
+
+.footer-text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.modern-footer {
+  transition: all 0.3s ease;
+}
+
+.modern-footer:hover {
+  opacity: 0.9;
 }
