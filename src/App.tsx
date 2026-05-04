@@ -333,6 +333,7 @@ export default function App() {
   };
 
   const activeTheme = themes.find((t) => t.id === currentSlide.themeId) || themes[0];
+  const inputClassName = "w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none resize-y min-h-[42px]";
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden font-sans" dir="rtl">
@@ -444,20 +445,20 @@ export default function App() {
             <div className="space-y-3">
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">العنوان الرئيسي</label>
-                <input
-                  type="text"
+                <textarea
                   value={currentSlide.title}
                   onChange={(e) => updateSlide({ title: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                  rows={2}
+                  className={inputClassName}
                 />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">العنوان الفرعي</label>
-                <input
-                  type="text"
+                <textarea
                   value={currentSlide.subtitle}
                   onChange={(e) => updateSlide({ subtitle: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                  rows={3}
+                  className={inputClassName}
                 />
               </div>
             </div>
@@ -487,19 +488,19 @@ export default function App() {
                     <Trash2 size={14} />
                   </button>
                   <div className="space-y-2">
-                    <input
-                      type="text"
+                    <textarea
                       value={field.label}
                       onChange={(e) => updateField(field.id, { label: e.target.value })}
                       placeholder="العنوان (مثال: المقر)"
-                      className="w-full bg-transparent border-b border-gray-300 px-1 py-1 text-xs font-bold text-gray-700 outline-none focus:border-blue-500"
+                      rows={2}
+                      className="w-full bg-transparent border-b border-gray-300 px-1 py-1 text-xs font-bold text-gray-700 outline-none focus:border-blue-500 resize-y"
                     />
-                    <input
-                      type="text"
+                    <textarea
                       value={field.value}
                       onChange={(e) => updateField(field.id, { value: e.target.value })}
                       placeholder="القيمة"
-                      className="w-full bg-transparent border-b border-gray-300 px-1 py-1 text-sm text-gray-800 outline-none focus:border-blue-500"
+                      rows={3}
+                      className="w-full bg-transparent border-b border-gray-300 px-1 py-1 text-sm text-gray-800 outline-none focus:border-blue-500 resize-y"
                     />
                   </div>
                 </div>
@@ -515,20 +516,20 @@ export default function App() {
             <div className="space-y-3">
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">النص اليمين (عربي)</label>
-                <input
-                  type="text"
+                <textarea
                   value={currentSlide.footerRight}
                   onChange={(e) => updateSlide({ footerRight: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                  rows={2}
+                  className={inputClassName}
                 />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">النص اليسار (إنجليزي)</label>
-                <input
-                  type="text"
+                <textarea
                   value={currentSlide.footerLeft}
                   onChange={(e) => updateSlide({ footerLeft: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                  rows={2}
+                  className={inputClassName}
                   dir="ltr"
                 />
               </div>
@@ -559,8 +560,8 @@ export default function App() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05)_0%,transparent_70%)]" />
               </div>
 
-              <div className="relative z-10 flex flex-col h-full p-16">
-                <div className="flex justify-between items-start mb-16">
+              <div className="relative z-10 grid h-full min-h-0 grid-rows-[auto_auto_minmax(0,1fr)_auto] px-16 py-14">
+                <div className="flex justify-between items-start gap-10 pb-14">
                   {/* Badge / Top Right Brand */}
                   <div className="relative">
                     {currentSlide.badgeImage ? (
@@ -601,25 +602,25 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mb-10">
-                  <h1 className={cn("text-6xl font-bold mb-4 tracking-tight", activeTheme.textColor)}>{currentSlide.title}</h1>
-                  <p className={cn("text-2xl font-medium", activeTheme.secondaryTextColor)}>{currentSlide.subtitle}</p>
+                <div className="min-h-0 pb-8">
+                  <h1 className={cn("text-6xl font-bold mb-4 tracking-tight text-bounded text-wrap-3", activeTheme.textColor)}>{currentSlide.title}</h1>
+                  <p className={cn("text-2xl font-medium leading-relaxed text-bounded text-wrap-3", activeTheme.secondaryTextColor)}>{currentSlide.subtitle}</p>
                 </div>
 
-                <div className="flex-1 relative">
+                <div className="relative min-h-0 overflow-hidden">
                   <div className="absolute inset-0 border border-gray-500/30 rounded-sm pointer-events-none">
                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-gray-400"></div>
                     <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gray-400"></div>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-x-16 gap-y-12 p-10 h-full content-start">
+                  <div className="grid h-full auto-rows-min grid-cols-2 content-start gap-x-16 gap-y-8 overflow-hidden p-10">
                     {currentSlide.fields.map((field) => (
-                      <div key={field.id} className="flex flex-col gap-2">
-                        <div className={cn("flex items-center gap-2", activeTheme.accentColor)}>
+                      <div key={field.id} className="flex min-w-0 flex-col gap-2">
+                        <div className={cn("flex min-w-0 items-start gap-2", activeTheme.accentColor)}>
                           <span className="text-xl leading-none -mt-1">□</span>
-                          <span className="text-lg font-bold tracking-widest uppercase">{field.label}</span>
+                          <span className="text-lg font-bold tracking-widest uppercase text-bounded text-wrap-2">{field.label}</span>
                         </div>
-                        <div className={cn("text-2xl font-medium leading-relaxed pr-6", activeTheme.textColor)}>
+                        <div className={cn("pr-6 text-2xl font-medium leading-relaxed text-bounded text-wrap-3", activeTheme.textColor)}>
                           {field.value}
                         </div>
                       </div>
@@ -631,18 +632,18 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mt-auto pt-10">
+                <div className="pt-8">
                   <div className={cn("w-full h-px bg-gradient-to-r from-transparent to-transparent mb-8", activeTheme.dividerColor)} />
-                  <div className={cn("flex flex-col md:flex-row justify-between items-center gap-6 modern-footer px-4", activeTheme.textColor)}>
+                  <div className={cn("modern-footer flex items-end justify-between gap-6 px-4", activeTheme.textColor)}>
                     {/* Right Side (Arabic) */}
-                    <div>
-                      <span className="text-3xl font-bold footer-text-glow tracking-tight">
+                    <div className="min-w-0 flex-1">
+                      <span className="footer-text-glow block text-3xl font-bold tracking-tight text-bounded text-wrap-2">
                         {currentSlide.footerRight}
                       </span>
                     </div>
                     {/* Left Side (English) */}
-                    <div>
-                      <span className="text-3xl font-bold footer-text-glow tracking-tight opacity-90 hover:opacity-100 transition-opacity cursor-pointer">
+                    <div className="min-w-0 max-w-[40%] text-left" dir="ltr">
+                      <span className="footer-text-glow block text-3xl font-bold tracking-tight opacity-90 transition-opacity text-bounded text-wrap-2">
                         {currentSlide.footerLeft}
                       </span>
                     </div>
