@@ -26,6 +26,7 @@ type Slide = {
   id: string;
   logoText: string;
   badgeTop: string;
+  badgeTopFontSize: number;
   badgeMiddle: string;
   badgeBottom: string;
   title: string;
@@ -205,6 +206,7 @@ const defaultSlide: Slide = {
   id: '1',
   logoText: 'EarthSync',
   badgeTop: 'AI',
+  badgeTopFontSize: 48,
   badgeMiddle: 'شركات ناشئة للمتابعة',
   badgeBottom: 'فبراير 2026',
   title: 'إيرث سينك',
@@ -447,6 +449,21 @@ export default function App() {
                     />
                   </div>
                   <div>
+                    <div className="mb-1 flex items-center justify-between gap-3">
+                      <label className="block text-xs font-medium text-gray-700">حجم خط الرمز</label>
+                      <span className="text-xs font-semibold text-gray-500">{currentSlide.badgeTopFontSize}px</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="24"
+                      max="72"
+                      step="2"
+                      value={currentSlide.badgeTopFontSize}
+                      onChange={(e) => updateSlide({ badgeTopFontSize: Number(e.target.value) })}
+                      className="w-full accent-blue-600"
+                    />
+                  </div>
+                  <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">نص الشارة</label>
                     <textarea
                       value={currentSlide.badgeMiddle}
@@ -608,7 +625,13 @@ export default function App() {
                         <div className={cn("flex min-h-24 items-stretch", activeTheme.badgeBg)}>
                           {/* Left Block */}
                           <div className={cn("bg-gradient-to-br w-24 flex items-center justify-center", activeTheme.badgeAccent)}>
-                            <span className="text-5xl font-black text-white" dir="ltr">{currentSlide.badgeTop}</span>
+                            <span
+                              className="font-black text-white"
+                              dir="ltr"
+                              style={{ fontSize: `${currentSlide.badgeTopFontSize}px`, lineHeight: 1 }}
+                            >
+                              {currentSlide.badgeTop}
+                            </span>
                           </div>
                           {/* Right Text Block */}
                           <div className="flex min-w-0 flex-1 flex-col justify-center items-start px-6 py-3">
