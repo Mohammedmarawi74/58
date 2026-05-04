@@ -202,6 +202,13 @@ const themes: Theme[] = [
   },
 ];
 
+const presetBadgeLogos = [
+  '/logos/logo-1.png',
+  '/logos/logo-2.png',
+  '/logos/logo-3.png',
+  '/logos/logo-4.png',
+];
+
 const defaultSlide: Slide = {
   id: '1',
   logoText: 'EarthSync',
@@ -434,6 +441,35 @@ export default function App() {
                       <Trash2 size={18} />
                     </button>
                   )}
+                </div>
+              </div>
+              <div className="mt-3">
+                <span className="mb-2 block text-xs font-medium text-gray-700">شعارات من المجلد</span>
+                <div className="grid grid-cols-2 gap-2">
+                  {presetBadgeLogos.map((logoSrc, index) => {
+                    const isActive = currentSlide.badgeImage === logoSrc;
+
+                    return (
+                      <button
+                        key={logoSrc}
+                        type="button"
+                        onClick={() => updateSlide({ badgeImage: logoSrc })}
+                        className={cn(
+                          "flex h-20 items-center justify-center rounded-md border bg-white p-2 transition-all",
+                          isActive
+                            ? "border-blue-600 ring-2 ring-blue-200"
+                            : "border-gray-200 hover:border-blue-300 hover:bg-blue-50"
+                        )}
+                        title={`شعار ${index + 1}`}
+                      >
+                        <img
+                          src={logoSrc}
+                          alt={`Logo ${index + 1}`}
+                          className="max-h-full w-auto object-contain"
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               {!currentSlide.badgeImage && (
