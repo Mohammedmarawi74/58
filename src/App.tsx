@@ -434,6 +434,38 @@ export default function App() {
                   )}
                 </div>
               </div>
+              {!currentSlide.badgeImage && (
+                <div className="space-y-3 rounded-md border border-gray-200 bg-gray-50 p-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">رمز الشارة</label>
+                    <input
+                      type="text"
+                      value={currentSlide.badgeTop}
+                      onChange={(e) => updateSlide({ badgeTop: e.target.value })}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none"
+                      dir="ltr"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">نص الشارة</label>
+                    <textarea
+                      value={currentSlide.badgeMiddle}
+                      onChange={(e) => updateSlide({ badgeMiddle: e.target.value })}
+                      rows={2}
+                      className={inputClassName}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">السطر السفلي للشارة</label>
+                    <textarea
+                      value={currentSlide.badgeBottom}
+                      onChange={(e) => updateSlide({ badgeBottom: e.target.value })}
+                      rows={2}
+                      className={inputClassName}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 
@@ -573,15 +605,15 @@ export default function App() {
                         {/* Decorative star */}
                         <div className={cn("absolute -top-4 -right-4", activeTheme.textColor, "opacity-80")}>✨</div>
                         
-                        <div className={cn("flex items-stretch h-24", activeTheme.badgeBg)}>
+                        <div className={cn("flex min-h-24 items-stretch", activeTheme.badgeBg)}>
                           {/* Left Block */}
                           <div className={cn("bg-gradient-to-br w-24 flex items-center justify-center", activeTheme.badgeAccent)}>
                             <span className="text-5xl font-black text-white" dir="ltr">{currentSlide.badgeTop}</span>
                           </div>
                           {/* Right Text Block */}
-                          <div className="px-6 py-3 flex flex-col justify-center items-start">
-                            <span className={cn("text-2xl font-bold tracking-wide", activeTheme.badgeTextColor)}>{currentSlide.badgeMiddle}</span>
-                            <div className="bg-white text-gray-900 text-xs font-bold px-2 py-1 mt-1 rounded-sm" dir="ltr">
+                          <div className="flex min-w-0 flex-1 flex-col justify-center items-start px-6 py-3">
+                            <span className={cn("text-2xl font-bold tracking-wide text-bounded text-wrap-2", activeTheme.badgeTextColor)}>{currentSlide.badgeMiddle}</span>
+                            <div className="mt-1 max-w-full rounded-sm bg-white px-2 py-1 text-xs font-bold text-gray-900 text-bounded text-wrap-2" dir="ltr">
                               {currentSlide.badgeBottom}
                             </div>
                           </div>
@@ -590,7 +622,12 @@ export default function App() {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-center transition-all bg-white px-8 py-5 shadow-2xl min-h-24 min-w-48 rounded-sm">
+                  <div
+                    className={cn(
+                      "flex items-center justify-center transition-all px-8 py-5 shadow-2xl min-h-24 min-w-48 rounded-sm",
+                      currentSlide.logoImage ? "bg-transparent" : "bg-white"
+                    )}
+                  >
                     {currentSlide.logoImage ? (
                       <img src={currentSlide.logoImage} alt="Logo" className="max-h-20 w-auto object-contain" />
                     ) : (
