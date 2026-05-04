@@ -624,7 +624,7 @@ export default function App() {
 
                   <div
                     className={cn(
-                      "flex items-center justify-center transition-all px-8 py-5 shadow-2xl min-h-24 min-w-48 rounded-sm",
+                      "flex items-center justify-center transition-all px-8 py-5 min-h-24 min-w-48 rounded-sm",
                       currentSlide.logoImage ? "bg-transparent" : "bg-white"
                     )}
                   >
