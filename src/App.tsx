@@ -285,10 +285,10 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
                     </span>
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col justify-center items-start px-6 py-3">
-                    <span className={cn('block max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-bold tracking-wide', theme.badgeTextColor)}>
+                    <span className={cn('block max-w-full text-2xl font-bold tracking-wide text-bounded', theme.badgeTextColor)}>
                       {slide.badgeMiddle}
                     </span>
-                    <div className="mt-1 max-w-full rounded-sm bg-white px-2 py-1 text-xs font-bold text-gray-900 text-bounded text-wrap-2" dir="ltr">
+                    <div className="mt-1 max-w-full rounded-sm bg-white px-2 py-1 text-xs font-bold text-gray-900 text-bounded" dir="ltr">
                       {slide.badgeBottom}
                     </div>
                   </div>
@@ -353,7 +353,7 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
               </span>
             </div>
             <div className="w-[40%] flex-none text-left" dir="ltr">
-              <span className="footer-text-glow block text-3xl font-bold tracking-tight opacity-90 transition-opacity whitespace-nowrap">
+              <span className="footer-text-glow block text-3xl font-bold tracking-tight opacity-90 transition-opacity text-bounded">
                 {slide.footerLeft}
               </span>
             </div>
