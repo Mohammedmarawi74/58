@@ -234,12 +234,143 @@ const defaultSlide: Slide = {
   badgeImage: '/logos/logo-1.png', // Default branded logo
 };
 
+type SlideCanvasProps = {
+  slide: Slide;
+  theme: Theme;
+  className?: string;
+  exportMode?: boolean;
+};
+
+const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function SlideCanvas(
+  { slide, theme, className, exportMode = false },
+  ref
+) {
+  return (
+    <div
+      ref={ref}
+      id={exportMode ? 'export-canvas-node' : 'canvas-node'}
+      className={cn(
+        'w-[1080px] h-[1080px] relative overflow-hidden flex flex-col',
+        theme.canvasBg,
+        className
+      )}
+      dir="rtl"
+      data-export-mode={exportMode ? 'true' : 'false'}
+    >
+      <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none noise-overlay" />
+      <div className="absolute inset-0 pointer-events-none" style={{ opacity: theme.patternOpacity }}>
+        <div className="absolute inset-0 decorative-pattern" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05)_0%,transparent_70%)]" />
+      </div>
+
+      <div className="relative z-10 grid h-full min-h-0 grid-rows-[auto_auto_minmax(0,1fr)_auto] px-16 py-14">
+        <div className="flex justify-between items-start gap-10 pb-14">
+          <div className="relative">
+            {slide.badgeImage ? (
+              <div className="transition-all">
+                <img src={slide.badgeImage} alt="Brand" className="max-h-24 w-auto object-contain" />
+              </div>
+            ) : (
+              <div className="relative p-[1px] border border-dashed border-gray-500/50">
+                <div className={cn('absolute -top-4 -right-4', theme.textColor, 'opacity-80')}>&#10024;</div>
+
+                <div className={cn('flex min-h-24 items-stretch', theme.badgeBg)}>
+                  <div className={cn('bg-gradient-to-br w-24 flex items-center justify-center', theme.badgeAccent)}>
+                    <span
+                      className="font-black text-white"
+                      dir="ltr"
+                      style={{ fontSize: `${slide.badgeTopFontSize}px`, lineHeight: 1 }}
+                    >
+                      {slide.badgeTop}
+                    </span>
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col justify-center items-start px-6 py-3">
+                    <span className={cn('text-2xl font-bold tracking-wide text-bounded text-wrap-2', theme.badgeTextColor)}>
+                      {slide.badgeMiddle}
+                    </span>
+                    <div className="mt-1 max-w-full rounded-sm bg-white px-2 py-1 text-xs font-bold text-gray-900 text-bounded text-wrap-2" dir="ltr">
+                      {slide.badgeBottom}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div
+            className={cn(
+              'flex items-center justify-center transition-all px-8 py-5 min-h-24 min-w-48 rounded-sm',
+              slide.logoImage ? 'bg-transparent' : 'bg-white'
+            )}
+          >
+            {slide.logoImage ? (
+              <img src={slide.logoImage} alt="Logo" className="max-h-20 w-auto object-contain" />
+            ) : (
+              <span className="text-3xl font-medium tracking-tight text-gray-900" dir="ltr">
+                {slide.logoText}
+                <span className="inline-block ml-1 opacity-70">&#10227;</span>
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="min-h-0 pb-8">
+          <h1 className={cn('text-6xl font-bold mb-4 tracking-tight text-bounded text-wrap-3', theme.textColor)}>{slide.title}</h1>
+          <p className={cn('text-2xl font-medium leading-relaxed text-bounded text-wrap-3', theme.secondaryTextColor)}>{slide.subtitle}</p>
+        </div>
+
+        <div className="relative min-h-0 overflow-hidden">
+          <div className="absolute inset-0 border border-gray-500/30 rounded-sm pointer-events-none">
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-gray-400"></div>
+            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gray-400"></div>
+          </div>
+
+          <div className="grid h-full auto-rows-min grid-cols-2 content-start gap-x-16 gap-y-8 overflow-hidden p-10">
+            {slide.fields.map((field) => (
+              <div key={field.id} className="flex min-w-0 flex-col gap-2">
+                <div className={cn('flex min-w-0 items-start gap-2', theme.accentColor)}>
+                  <span className="text-xl leading-none -mt-1">&#9633;</span>
+                  <span className="text-lg font-bold tracking-widest uppercase text-bounded text-wrap-2">{field.label}</span>
+                </div>
+                <div className={cn('pr-6 text-2xl font-medium leading-relaxed text-bounded text-wrap-3', theme.textColor)}>
+                  {field.value}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="absolute -top-12 -left-4 w-24 h-24 border border-white/20 flex items-center justify-center opacity-80">
+            <div className={cn('w-full h-full bg-gradient-to-br mix-blend-screen decorative-pattern', theme.badgeAccent)}></div>
+          </div>
+        </div>
+
+        <div className="pt-8">
+          <div className={cn('w-full h-px bg-gradient-to-r from-transparent to-transparent mb-8', theme.dividerColor)} />
+          <div className={cn('modern-footer flex items-end justify-between gap-6 px-4', theme.textColor)}>
+            <div className="min-w-0 flex-1">
+              <span className="footer-text-glow block text-3xl font-bold tracking-tight text-bounded text-wrap-2">
+                {slide.footerRight}
+              </span>
+            </div>
+            <div className="min-w-0 max-w-[40%] text-left" dir="ltr">
+              <span className="footer-text-glow block text-3xl font-bold tracking-tight opacity-90 transition-opacity text-bounded text-wrap-2">
+                {slide.footerLeft}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 export default function App() {
   const EXPORT_SIZE = 2160;
   const [slides, setSlides] = useState<Slide[]>([defaultSlide]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const exportCanvasRef = useRef<HTMLDivElement>(null);
 
   const currentSlide = slides[currentIndex];
 
@@ -325,10 +456,10 @@ export default function App() {
   }, []);
 
   const exportImage = useCallback(async () => {
-    if (canvasRef.current === null) return;
+    if (exportCanvasRef.current === null) return;
     setIsExporting(true);
     try {
-      const canvasNode = canvasRef.current;
+      const canvasNode = exportCanvasRef.current;
       const nodeWidth = canvasNode.scrollWidth;
       const nodeHeight = canvasNode.scrollHeight;
       const exportScale = EXPORT_SIZE / Math.max(nodeWidth, nodeHeight);
@@ -337,7 +468,6 @@ export default function App() {
       const dataUrl = await toPng(canvasNode, {
         quality: 1,
         pixelRatio: exportScale,
-        backgroundColor: '#ffffff',
         width: nodeWidth,
         height: nodeHeight,
         cacheBust: true,
@@ -392,6 +522,10 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden font-sans" dir="rtl">
+      <div className="pointer-events-none fixed -left-[200vw] top-0" aria-hidden="true">
+        <SlideCanvas ref={exportCanvasRef} slide={currentSlide} theme={activeTheme} exportMode />
+      </div>
+
       {/* Sidebar Controls */}
       <div className="w-96 bg-white border-l border-gray-200 flex flex-col h-full shadow-lg z-10">
         <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
