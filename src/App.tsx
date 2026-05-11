@@ -369,7 +369,6 @@ export default function App() {
   const [slides, setSlides] = useState<Slide[]>([defaultSlide]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
-  const canvasRef = useRef<HTMLDivElement>(null);
   const exportCanvasRef = useRef<HTMLDivElement>(null);
 
   const currentSlide = slides[currentIndex];
@@ -807,11 +806,11 @@ export default function App() {
       <div className="flex-1 flex flex-col relative bg-gray-200">
         <div className="flex-1 overflow-auto flex items-center justify-center p-8">
           <div className="relative shadow-2xl transition-transform duration-200" style={{ transform: 'scale(0.85)', transformOrigin: 'center' }}>
+            <SlideCanvas slide={currentSlide} theme={activeTheme} />
             <div
-              ref={canvasRef}
-              id="canvas-node"
+              id="legacy-canvas-node"
               className={cn(
-                "w-[1080px] h-[1080px] relative overflow-hidden flex flex-col",
+                "hidden w-[1080px] h-[1080px] relative overflow-hidden flex flex-col",
                 activeTheme.canvasBg
               )}
               dir="rtl"
