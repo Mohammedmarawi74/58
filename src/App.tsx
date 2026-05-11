@@ -235,6 +235,7 @@ const defaultSlide: Slide = {
 };
 
 export default function App() {
+  const EXPORT_SIZE = 2160;
   const [slides, setSlides] = useState<Slide[]>([defaultSlide]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
@@ -294,10 +295,16 @@ export default function App() {
       await new Promise((resolve) => setTimeout(resolve, 100));
       const dataUrl = await toPng(canvasRef.current, {
         quality: 1,
-        pixelRatio: 1,
-        width: 1080,
-        height: 1080,
+        pixelRatio: 2,
+        width: EXPORT_SIZE,
+        height: EXPORT_SIZE,
+        canvasWidth: EXPORT_SIZE,
+        canvasHeight: EXPORT_SIZE,
+        skipAutoScale: true,
         style: { transform: 'scale(1)', transformOrigin: 'top left' },
+        cacheBust: true,
+        imagePlaceholder:
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9sY9lSsAAAAASUVORK5CYII=',
       });
       const link = document.createElement('a');
       link.download = `slide-${currentIndex + 1}.png`;
