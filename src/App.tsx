@@ -352,8 +352,8 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
                 {slide.footerRight}
               </span>
             </div>
-            <div className="min-w-0 max-w-[40%] text-left" dir="ltr">
-              <span className="footer-text-glow block text-3xl font-bold tracking-tight opacity-90 transition-opacity text-bounded text-wrap-2">
+            <div className="w-[40%] flex-none text-left" dir="ltr">
+              <span className="footer-text-glow block text-3xl font-bold tracking-tight opacity-90 transition-opacity whitespace-nowrap">
                 {slide.footerLeft}
               </span>
             </div>
@@ -809,8 +809,9 @@ export default function App() {
             <SlideCanvas slide={currentSlide} theme={activeTheme} />
             <div
               id="legacy-canvas-node"
+              aria-hidden="true"
               className={cn(
-                "hidden w-[1080px] h-[1080px] relative overflow-hidden flex flex-col",
+                "absolute pointer-events-none opacity-0 -z-10 w-[1080px] h-[1080px] overflow-hidden flex flex-col",
                 activeTheme.canvasBg
               )}
               dir="rtl"
