@@ -285,7 +285,7 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
                     </span>
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col justify-center items-start px-6 py-3">
-                    <span className={cn('text-2xl font-bold tracking-wide text-bounded text-wrap-2', theme.badgeTextColor)}>
+                    <span className={cn('block max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-bold tracking-wide', theme.badgeTextColor)}>
                       {slide.badgeMiddle}
                     </span>
                     <div className="mt-1 max-w-full rounded-sm bg-white px-2 py-1 text-xs font-bold text-gray-900 text-bounded text-wrap-2" dir="ltr">
