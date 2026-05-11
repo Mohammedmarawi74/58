@@ -288,19 +288,60 @@ export default function App() {
     setCurrentIndex(currentIndex + 1);
   };
 
+  const waitForCanvasAssets = useCallback(async (node: HTMLElement) => {
+    if ('fonts' in document) {
+      await document.fonts.ready;
+    }
+
+    const images = Array.from(node.querySelectorAll('img'));
+    await Promise.all(
+      images.map(async (img) => {
+        if (img.complete && img.naturalWidth > 0) {
+          if (typeof img.decode === 'function') {
+            try {
+              await img.decode();
+            } catch {
+              // Some browsers reject decode for already-usable images.
+            }
+          }
+          return;
+        }
+
+        await new Promise<void>((resolve) => {
+          const finalize = () => {
+            img.removeEventListener('load', finalize);
+            img.removeEventListener('error', finalize);
+            resolve();
+          };
+
+          img.addEventListener('load', finalize, { once: true });
+          img.addEventListener('error', finalize, { once: true });
+        });
+      })
+    );
+
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  }, []);
+
   const exportImage = useCallback(async () => {
     if (canvasRef.current === null) return;
     setIsExporting(true);
     try {
       const canvasNode = canvasRef.current;
-      const exportScale = EXPORT_SIZE / canvasNode.offsetWidth;
+      const nodeWidth = canvasNode.scrollWidth;
+      const nodeHeight = canvasNode.scrollHeight;
+      const exportScale = EXPORT_SIZE / Math.max(nodeWidth, nodeHeight);
 
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await waitForCanvasAssets(canvasNode);
       const dataUrl = await toPng(canvasNode, {
         quality: 1,
         pixelRatio: exportScale,
         backgroundColor: '#ffffff',
+        width: nodeWidth,
+        height: nodeHeight,
         cacheBust: true,
+        preferredFontFormat: 'woff2',
         imagePlaceholder:
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9sY9lSsAAAAASUVORK5CYII=',
       });
@@ -314,7 +355,7 @@ export default function App() {
     } finally {
       setIsExporting(false);
     }
-  }, [currentIndex]);
+  }, [currentIndex, waitForCanvasAssets]);
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
