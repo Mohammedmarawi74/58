@@ -292,16 +292,14 @@ export default function App() {
     if (canvasRef.current === null) return;
     setIsExporting(true);
     try {
+      const canvasNode = canvasRef.current;
+      const exportScale = EXPORT_SIZE / canvasNode.offsetWidth;
+
       await new Promise((resolve) => setTimeout(resolve, 100));
-      const dataUrl = await toPng(canvasRef.current, {
+      const dataUrl = await toPng(canvasNode, {
         quality: 1,
-        pixelRatio: 2,
-        width: EXPORT_SIZE,
-        height: EXPORT_SIZE,
-        canvasWidth: EXPORT_SIZE,
-        canvasHeight: EXPORT_SIZE,
-        skipAutoScale: true,
-        style: { transform: 'scale(1)', transformOrigin: 'top left' },
+        pixelRatio: exportScale,
+        backgroundColor: '#ffffff',
         cacheBust: true,
         imagePlaceholder:
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9sY9lSsAAAAASUVORK5CYII=',
