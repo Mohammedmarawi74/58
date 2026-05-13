@@ -213,9 +213,9 @@ const defaultSlide: Slide = {
   id: '1',
   logoText: 'EarthSync',
   badgeTop: 'AI',
-  badgeTopFontSize: 48,
-  badgeMiddle: 'شركات ناشئة للمتابعة',
-  badgeBottom: 'فبراير 2026',
+  badgeTopFontSize: 36,
+  badgeMiddle: 'شركات عربية تحت المجهر ',
+  badgeBottom: 'رؤّاد',
   title: 'إيرث سينك',
   subtitle: 'تحسين قرارات الطاقة النظيفة للشركات',
   fields: [
