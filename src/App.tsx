@@ -329,7 +329,7 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
             {slide.fields.map((field) => (
               <div key={field.id} className="flex min-w-0 flex-col gap-2">
                 <div className={cn('flex min-w-max items-start gap-2', theme.accentColor)}>
-                  <span className="text-xl leading-none -mt-1">&#9633;</span>
+                  <span className="text-xl leading-none pt-6 -mt-1">&#9633;</span>
                   <span className="text-lg font-bold tracking-widest whitespace-nowrap">{field.label}</span>
                 </div>
                 <div className={cn('pr-6 text-2xl font-medium leading-relaxed whitespace-nowrap', theme.textColor)}>
@@ -554,8 +554,8 @@ export default function App() {
                   onClick={() => updateSlide({ themeId: t.id })}
                   className={cn(
                     "px-3 py-2 text-xs font-medium rounded-md border transition-all text-right",
-                    currentSlide.themeId === t.id 
-                      ? "bg-blue-600 border-blue-600 text-white shadow-md" 
+                    currentSlide.themeId === t.id
+                      ? "bg-blue-600 border-blue-600 text-white shadow-md"
                       : "bg-white border-gray-200 text-gray-700 hover:border-blue-400 hover:bg-blue-50"
                   )}
                 >
@@ -566,7 +566,7 @@ export default function App() {
           </section>
 
           <hr className="border-gray-200" />
-          
+
           {/* Header Section */}
           <section className="space-y-4">
             <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider">الترويسة</h2>
@@ -590,7 +590,7 @@ export default function App() {
                   )}
                 </div>
               </div>
-              
+
               {!currentSlide.logoImage && (
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">نص الشعار (أعلى اليمين)</label>
@@ -817,8 +817,8 @@ export default function App() {
               dir="rtl"
             >
               <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none noise-overlay" />
-              <div 
-                className="absolute inset-0 pointer-events-none" 
+              <div
+                className="absolute inset-0 pointer-events-none"
                 style={{ opacity: activeTheme.patternOpacity }}
               >
                 <div className="absolute inset-0 decorative-pattern" />
@@ -837,7 +837,7 @@ export default function App() {
                       <div className="relative p-[1px] border border-dashed border-gray-500/50">
                         {/* Decorative star */}
                         <div className={cn("absolute -top-4 -right-4", activeTheme.textColor, "opacity-80")}>✨</div>
-                        
+
                         <div className={cn("flex min-h-24 items-stretch", activeTheme.badgeBg)}>
                           {/* Left Block */}
                           <div className={cn("bg-gradient-to-br w-24 flex items-center justify-center", activeTheme.badgeAccent)}>
@@ -888,12 +888,12 @@ export default function App() {
                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-gray-400"></div>
                     <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gray-400"></div>
                   </div>
-                  
+
                   <div className="grid h-full auto-rows-min grid-cols-2 content-start gap-x-16 gap-y-8 overflow-hidden p-10">
                     {currentSlide.fields.map((field) => (
                       <div key={field.id} className="flex min-w-0 flex-col gap-2">
                         <div className={cn("flex min-w-0 items-start gap-2", activeTheme.accentColor)}>
-                          <span className="text-xl leading-none -mt-1">□</span>
+                          <span className="text-xl leading-none pt-6 -mt-1">□</span>
                           <span className="text-lg font-bold tracking-widest uppercase text-bounded text-wrap-2">{field.label}</span>
                         </div>
                         <div className={cn("pr-6 text-2xl font-medium leading-relaxed text-bounded text-wrap-3", activeTheme.textColor)}>
@@ -939,7 +939,7 @@ export default function App() {
             <Plus size={24} />
             <span className="text-xs font-medium mt-1">جديد</span>
           </button>
-          
+
           <div className="w-px h-16 bg-gray-200 mx-2"></div>
 
           {slides.map((slide, index) => (
@@ -952,9 +952,9 @@ export default function App() {
               onClick={() => setCurrentIndex(index)}
             >
               <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                 <span className="text-white text-xs truncate px-2">{slide.title || `شريحة ${index + 1}`}</span>
+                <span className="text-white text-xs truncate px-2">{slide.title || `شريحة ${index + 1}`}</span>
               </div>
-              
+
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <button
                   onClick={(e) => { e.stopPropagation(); duplicateSlide(); }}
@@ -973,7 +973,7 @@ export default function App() {
                   </button>
                 )}
               </div>
-              
+
               {currentIndex === index && (
                 <div className="absolute top-1 right-1 w-2 h-2 bg-blue-600 rounded-full"></div>
               )}
