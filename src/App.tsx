@@ -212,10 +212,10 @@ const presetBadgeLogos = [
 const defaultSlide: Slide = {
   id: '1',
   logoText: 'EarthSync',
-  badgeTop: 'AI',
+  badgeTop: 'رؤّاد',
   badgeTopFontSize: 36,
   badgeMiddle: 'شركات عربية تحت المجهر ',
-  badgeBottom: 'رؤّاد',
+  badgeBottom: '',
   title: 'إيرث سينك',
   subtitle: 'تحسين قرارات الطاقة النظيفة للشركات',
   fields: [
