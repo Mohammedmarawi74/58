@@ -315,8 +315,8 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
         </div>
 
         <div className="min-h-0 pb-8">
-          <h1 className={cn('text-6xl font-bold mb-4 tracking-tight whitespace-nowrap', theme.textColor)}>{slide.title}</h1>
-          <p className={cn('text-2xl font-medium leading-relaxed whitespace-nowrap', theme.secondaryTextColor)}>{slide.subtitle}</p>
+          <h1 className={cn('text-6xl font-bold mb-4 tracking-tight text-bounded', theme.textColor)}>{slide.title}</h1>
+          <p className={cn('text-2xl font-medium leading-relaxed text-bounded', theme.secondaryTextColor)}>{slide.subtitle}</p>
         </div>
 
         <div className="relative min-h-0 overflow-hidden">
@@ -329,7 +329,7 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
             {slide.fields.map((field) => (
               <div key={field.id} className="flex min-w-0 flex-col gap-2">
                 <div className={cn('flex min-w-max items-start gap-2', theme.accentColor)}>
-                  <span className="text-xl leading-none pt-6 -mt-1">&#9633;</span>
+                  <span className="text-xl leading-none pt-[6px] -mt-1">&#9633;</span>
                   <span className="text-lg font-bold tracking-widest whitespace-nowrap">{field.label}</span>
                 </div>
                 <div className={cn('pr-6 text-2xl font-medium leading-relaxed whitespace-nowrap', theme.textColor)}>
@@ -348,7 +348,7 @@ const SlideCanvas = React.forwardRef<HTMLDivElement, SlideCanvasProps>(function 
           <div className={cn('w-full h-px bg-gradient-to-r from-transparent to-transparent mb-8', theme.dividerColor)} />
           <div className={cn('modern-footer flex items-end justify-between gap-6 px-4', theme.textColor)}>
             <div className="min-w-0 flex-1">
-              <span className="footer-text-glow block text-3xl font-bold tracking-tight whitespace-nowrap">
+              <span className="footer-text-glow block text-3xl font-bold tracking-tight text-bounded">
                 {slide.footerRight}
               </span>
             </div>
@@ -893,7 +893,7 @@ export default function App() {
                     {currentSlide.fields.map((field) => (
                       <div key={field.id} className="flex min-w-0 flex-col gap-2">
                         <div className={cn("flex min-w-0 items-start gap-2", activeTheme.accentColor)}>
-                          <span className="text-xl leading-none pt-6 -mt-1">□</span>
+                          <span className="text-xl leading-none pt-[6px] -mt-1">□</span>
                           <span className="text-lg font-bold tracking-widest uppercase text-bounded text-wrap-2">{field.label}</span>
                         </div>
                         <div className={cn("pr-6 text-2xl font-medium leading-relaxed text-bounded text-wrap-3", activeTheme.textColor)}>
