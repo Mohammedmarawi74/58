@@ -212,7 +212,7 @@ const presetBadgeLogos = [
 const defaultSlide: Slide = {
   id: '1',
   logoText: 'EarthSync',
-  badgeTop: 'رؤّاد',
+  badgeTop: 'روّاد',
   badgeTopFontSize: 36,
   badgeMiddle: 'شركات عربية تحت المجهر ',
   badgeBottom: '',
